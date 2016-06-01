@@ -1,0 +1,5 @@
+{
+  "name": "konnektiv/git-wordpress-publish",
+  "description": "Shell script to publish a WordPress plugin from a git repository.",
+  "license": "AGPL-3.0"
+}
