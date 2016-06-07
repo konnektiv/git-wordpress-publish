@@ -97,6 +97,10 @@ svn commit --username=$SVNUSER -m "Commiting new assets"
 
 echo "Creating new SVN tag & committing it"
 cd $SVNPATH
+if test -d tags/$NEWVERSION1/; then
+  # remove tags directory if it already exist
+  svn rm --force tags/$NEWVERSION1/
+fi
 svn copy trunk/ tags/$NEWVERSION1/
 cd $SVNPATH/tags/$NEWVERSION1
 svn commit --username=$SVNUSER -m "Tagging version $NEWVERSION1"
