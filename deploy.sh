@@ -86,13 +86,13 @@ README.md
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
-svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
+svn status | grep -v "^.[ \t]*\..*" | awk '{print $2}' | xargs svn add
 svn commit --username=$SVNUSER -m "Commiting version $NEWVERSION1"
 
 echo "Changing directory to SVN and committing to assets"
 cd $SVNPATH/assets/
 # Add all new files that are not set to be ignored
-svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
+svn status | grep -v "^.[ \t]*\..*" | awk '{print $2}' | xargs svn add
 svn commit --username=$SVNUSER -m "Commiting new assets"
 
 echo "Creating new SVN tag & committing it"
