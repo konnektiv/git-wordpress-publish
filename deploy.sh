@@ -67,11 +67,8 @@ echo
 echo "Creating local copy of SVN repo ..."
 svn co $SVNURL $SVNPATH
 
-echo "Clearing svn repo so we can overwrite it"
-svn rm --force $SVNPATH/trunk/*
-
 echo "Exporting the HEAD of master from git to the trunk of SVN"
-git checkout-index -a -f --prefix=$SVNPATH/trunk/
+rsync -r --delete --exclude .git . $SVNPATH/trunk/
 
 echo "Moving files from the asset directory to assets"
 mv $SVNPATH/trunk/assets/* $SVNPATH/assets/
@@ -86,13 +83,13 @@ README.md
 echo "Changing directory to SVN and committing to trunk"
 cd $SVNPATH/trunk/
 # Add all new files that are not set to be ignored
-svn status | grep -v "^.[ \t]*\..*" | awk '{print $2}' | xargs svn add
+svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 svn commit --username=$SVNUSER -m "Commiting version $NEWVERSION1"
 
 echo "Changing directory to SVN and committing to assets"
 cd $SVNPATH/assets/
 # Add all new files that are not set to be ignored
-svn status | grep -v "^.[ \t]*\..*" | awk '{print $2}' | xargs svn add
+svn status | grep -v "^.[ \t]*\..*" | grep "^?" | awk '{print $2}' | xargs svn add
 svn commit --username=$SVNUSER -m "Commiting new assets"
 
 echo "Creating new SVN tag & committing it"
